@@ -9,6 +9,8 @@ part of 'home.state.dart';
 abstract class _$HomeStateCWProxy {
   HomeState loading(bool loading);
 
+  HomeState places(PlaceEntity? places);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `HomeState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -17,6 +19,7 @@ abstract class _$HomeStateCWProxy {
   /// ````
   HomeState call({
     bool? loading,
+    PlaceEntity? places,
   });
 }
 
@@ -30,6 +33,9 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState loading(bool loading) => this(loading: loading);
 
   @override
+  HomeState places(PlaceEntity? places) => this(places: places);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `HomeState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -39,12 +45,17 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   /// ````
   HomeState call({
     Object? loading = const $CopyWithPlaceholder(),
+    Object? places = const $CopyWithPlaceholder(),
   }) {
     return HomeState(
       loading: loading == const $CopyWithPlaceholder() || loading == null
           ? _value.loading
           // ignore: cast_nullable_to_non_nullable
           : loading as bool,
+      places: places == const $CopyWithPlaceholder()
+          ? _value.places
+          // ignore: cast_nullable_to_non_nullable
+          : places as PlaceEntity?,
     );
   }
 }

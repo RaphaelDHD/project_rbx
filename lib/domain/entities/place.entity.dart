@@ -1,5 +1,7 @@
+import 'package:template_flutter_but/domain/entities/monument.entity.dart';
+
 class PlaceEntity {
   final int? totalCount;
-
-  const PlaceEntity({required this.totalCount});
+  final List<MonumentEntity>? results;
+  const PlaceEntity({required this.totalCount, required this.results});
 }

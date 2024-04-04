@@ -20,5 +20,5 @@ abstract class PlacesEndpoint {
 
   ///
   @GET('/liste-monuments-historiques-de-roubaix@ville-de-roubaix/records')
-  Future<PlaceModel> getPlaces({@Query('limit') int limit = 20});
+  Future<PlaceModel> getPlaces({@Query('limit') int limit = 15});
 }

@@ -19,7 +19,7 @@ class _PlacesEndpoint implements PlacesEndpoint {
   String? baseUrl;
 
   @override
-  Future<PlaceModel> getPlaces({int limit = 20}) async {
+  Future<PlaceModel> getPlaces({int limit = 15}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'limit': limit};
     final _headers = <String, dynamic>{};

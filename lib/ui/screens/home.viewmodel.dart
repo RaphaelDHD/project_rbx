@@ -25,8 +25,8 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
     state = state.copyWith(loading: value);
   }
 
-  void _init() {
-    // TODO - api call
-    _placesRepository.getPlaces();
+  void _init() async {
+    final places = await _placesRepository.getPlaces();
+    state = state.copyWith(places: places);
   }
 }
