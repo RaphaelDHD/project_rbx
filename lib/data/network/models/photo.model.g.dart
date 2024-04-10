@@ -7,14 +7,14 @@ part of 'photo.model.dart';
 // **************************************************************************
 
 PhotoModel _$PhotoModelFromJson(Map<String, dynamic> json) => PhotoModel(
-      exifOrientation: json['exif_orientation'] as int,
-      thumbnail: json['thumbnail'] as bool,
-      filename: json['filename'] as String,
-      format: json['format'] as String,
-      width: json['width'] as int,
-      id: json['id'] as String,
-      height: json['height'] as int,
-      url: json['url'] as String,
+      exifOrientation: json['exif_orientation'] as int?,
+      thumbnail: json['thumbnail'] as bool?,
+      filename: json['filename'] as String?,
+      format: json['format'] as String?,
+      width: json['width'] as int?,
+      id: json['id'] as String?,
+      height: json['height'] as int?,
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$PhotoModelToJson(PhotoModel instance) =>

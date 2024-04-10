@@ -13,4 +13,9 @@ class PlacesRemoteDataSourceImpl implements PlacesRemoteDataSource {
   Future<PlaceModel> getPlaces() {
     return _placesEndpoint.getPlaces();
   }
+
+  @override
+  Future<PlaceModel> getPlacesWithOffset({required int offset}) {
+    return _placesEndpoint.getPlacesWithOffset(offset: offset);
+  }
 }

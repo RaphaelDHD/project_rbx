@@ -1,12 +1,12 @@
 class PhotoEntity {
-  final int orientation;
-  final bool thumbnail;
-  final String filename;
-  final String format;
-  final int width;
-  final String id;
-  final int height;
-  final String url;
+  final int? orientation;
+  final bool? thumbnail;
+  final String? filename;
+  final String? format;
+  final int? width;
+  final String? id;
+  final int? height;
+  final String? url;
 
   const PhotoEntity({
     required this.orientation,

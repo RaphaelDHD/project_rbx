@@ -16,4 +16,12 @@ class PlacesRepositoryImpl implements PlacesRepository {
     final PlaceModel model = await _placesRemoteDataSource.getPlaces();
     return model.toEntity;
   }
+
+  @override
+  Future<PlaceEntity> getPlacesWithOffset({required int offset}) async {
+    final PlaceModel model = await _placesRemoteDataSource.getPlacesWithOffset(offset: offset);
+    return model.toEntity;
+  }
+
+
 }

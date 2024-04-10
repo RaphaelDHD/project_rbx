@@ -5,14 +5,14 @@ part 'photo.model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class PhotoModel {
-  final int exifOrientation;
-  final bool thumbnail;
-  final String filename;
-  final String format;
-  final int width;
-  final String id;
-  final int height;
-  final String url;
+  final int? exifOrientation;
+  final bool? thumbnail;
+  final String? filename;
+  final String? format;
+  final int? width;
+  final String? id;
+  final int? height;
+  final String? url;
 
   const PhotoModel({
     required this.exifOrientation,
