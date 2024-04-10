@@ -29,7 +29,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       ref.read(homeProvider.notifier).getPlacesWithOffset();
     }
   }
@@ -49,10 +50,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           : Column(
               children: <Widget>[
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
                     controller: _scrollController,
-                    itemCount:
-                        places.results!.length == places.totalCount ? places.results?.length : places.results!.length  + 1, // +1 for loading indicator
+                    itemCount: (places.results!.length == places.totalCount
+                            ? places.results?.length
+                            : places.results!.length + 1) ??
+                        0, // +1 for loading indicator
                     itemBuilder: (BuildContext context, int index) {
                       if (index < places.results!.length) {
                         final MonumentEntity monument = places.results![index];
@@ -67,6 +71,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ));
                       }
                     },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 4.0);
+                    },
                   ),
                 ),
               ],
@@ -78,60 +85,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final String firstLetter = monument.name?[0].toUpperCase() ?? '';
     const Color color = Colors.blue;
 
-    return InkWell(
-      onTap: () {
-        // Action à effectuer lors du clic sur l'élément
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
-              child: Center(
-                child: Text(
-                  firstLetter,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    monument.name ?? '',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    monument.epoque ?? '',
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return Card(
+        child: ListTile(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            onTap: () {},
+            title: Text(monument.name ?? ''),
+            subtitle: Text(monument.epoque ?? ''),
+            leading: CircleAvatar(
+              backgroundColor: color,
+              child: Text(firstLetter),
+            )));
   }
 }

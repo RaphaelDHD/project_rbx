@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
