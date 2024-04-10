@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
+import 'package:template_flutter_but/domain/entities/place.entity.dart';
 import 'package:template_flutter_but/domain/repository/places.repository.dart';
 import 'package:template_flutter_but/ui/abstraction/view_model_abs.dart';
 import 'package:template_flutter_but/ui/screens/home.state.dart';
@@ -26,7 +27,7 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
   }
 
   void _init() async {
-    final places = await _placesRepository.getPlaces();
+    final PlaceEntity places = await _placesRepository.getPlaces();
     state = state.copyWith(places: places);
   }
 }
