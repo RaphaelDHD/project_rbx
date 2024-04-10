@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
-import 'package:template_flutter_but/ui/screens/home.state.dart';
-import 'package:template_flutter_but/ui/screens/home.viewmodel.dart';
+import 'package:template_flutter_but/ui/screens/Home/home.state.dart';
+import 'package:template_flutter_but/ui/screens/Home/home.viewmodel.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -41,6 +41,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final PlaceEntity? places = state.places;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Monuments historiques de Roubaix'),
+      ),
       body: places == null
           ? const Center(
               child: CircularProgressIndicator(

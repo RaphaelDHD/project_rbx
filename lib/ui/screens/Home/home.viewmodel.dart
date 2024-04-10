@@ -3,8 +3,7 @@ import 'package:template_flutter_but/application/injections/initializer.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
 import 'package:template_flutter_but/domain/repository/places.repository.dart';
 import 'package:template_flutter_but/ui/abstraction/view_model_abs.dart';
-import 'package:template_flutter_but/ui/screens/home.state.dart';
-
+import 'package:template_flutter_but/ui/screens/Home/home.state.dart';
 ///
 final StateNotifierProvider<HomeViewModel, HomeState> homeProvider =
     StateNotifierProvider<HomeViewModel, HomeState>(

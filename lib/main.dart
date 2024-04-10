@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
-import 'package:template_flutter_but/ui/screens/home.screen.dart';
-import 'package:template_flutter_but/ui/screens/map.screen.dart';
+import 'package:template_flutter_but/ui/screens/Home/home.screen.dart';
+import 'package:template_flutter_but/ui/screens/Map/map.screen.dart';
 
 void main() async {
   initializeInjections();
@@ -46,11 +46,11 @@ class _MyAppState extends State<MyApp> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'Monuments',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.map),
-              label: 'Map',
+              label: 'Cartes',
             ),
           ],
           currentIndex: _selectedIndex,
