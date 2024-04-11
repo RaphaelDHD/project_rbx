@@ -20,6 +20,8 @@ import 'package:template_flutter_but/data/repositories/places/places.repository_
     as _i9;
 import 'package:template_flutter_but/domain/repository/places.repository.dart'
     as _i8;
+import 'package:template_flutter_but/domain/services/places.services.dart'
+    as _i10;
 import 'package:template_flutter_but/foundation/client/dio.client.dart' as _i3;
 import 'package:template_flutter_but/foundation/client/interceptors/header.interceptor.dart'
     as _i4;
@@ -45,6 +47,8 @@ extension GetItInjectableX on _i1.GetIt {
             placesEndpoint: gh<_i5.PlacesEndpoint>()));
     gh.singleton<_i8.PlacesRepository>(() => _i9.PlacesRepositoryImpl(
         placesRemoteDataSource: gh<_i6.PlacesRemoteDataSource>()));
+    gh.singleton<_i10.PlacesService>(
+        () => _i10.PlacesService(placesRepository: gh<_i8.PlacesRepository>()));
     return this;
   }
 }
