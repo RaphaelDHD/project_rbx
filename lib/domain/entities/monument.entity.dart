@@ -49,5 +49,7 @@ class MonumentEntity {
     required this.long,
   });
 
+  set isFavorite(bool isFavorite) {}
+
 
 }

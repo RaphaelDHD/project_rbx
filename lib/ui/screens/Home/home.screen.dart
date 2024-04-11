@@ -88,28 +88,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildMonumentListItem(BuildContext context, MonumentEntity monument) {
     final String firstLetter = monument.name?[0].toUpperCase() ?? '';
     const Color color = Colors.blue;
+    bool isFavorite =
+        ref.read(homeProvider.notifier).isFavorite(id: monument.id);
 
     return Card(
-        child: ListTile(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0)),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        DetailsScreen(monument: monument),
-                  ));
-            },
-            title: Text(monument.name ?? ''),
-            subtitle: Text(monument.epoque ?? ''),
-            leading: CircleAvatar(
-              backgroundColor: color,
-              child: Text(firstLetter),
-            ),
-            trailing: IconButton(
-              icon: const Icon(Icons.favorite_border, color: Colors.purpleAccent,),
-              onPressed: () {},
-            )));
+      child: ListTile(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    DetailsScreen(monument: monument),
+              ));
+        },
+        title: Text(monument.name ?? ''),
+        subtitle: Text(monument.epoque ?? ''),
+        leading: CircleAvatar(
+          backgroundColor: color,
+          child: Text(firstLetter),
+        ),
+        trailing: IconButton(
+          icon: Icon(
+            isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: Colors.purpleAccent,
+          ),
+          onPressed: () {
+            if (isFavorite) {
+              ref
+                  .read(homeProvider.notifier)
+                  .removeFromFavorite(id: monument.id);
+            } else {
+              ref.read(homeProvider.notifier).addToFavorite(id: monument.id);
+            }
+          },
+        ),
+      ),
+    );
   }
 }

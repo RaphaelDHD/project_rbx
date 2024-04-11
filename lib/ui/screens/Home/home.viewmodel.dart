@@ -28,13 +28,32 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
   void _init() async {
     _placesService.placeValueNotifier.addListener(() {
       state = state.copyWith(places: _placesService.placeValueNotifier.value);
-    }); 
+    });
+    _placesService.favoriteValueNotifier.addListener(() {
+      state =
+          state.copyWith(favorite: _placesService.favoriteValueNotifier.value);
+    });
     updateLoading(true);
     _placesService.getPlaces();
     updateLoading(false);
   }
 
   void getPlacesWithOffset() async {
-    _placesService.addPlacesWithOffset(offset: state.places?.results?.length ?? 0);
+    _placesService.addPlacesWithOffset(
+        offset: state.places?.results?.length ?? 0);
   }
+
+  void addToFavorite({required int id}) {
+    _placesService.addToFavorite(id: id);
+  }
+
+  void removeFromFavorite({required int id}) {
+    _placesService.removeFromFavorite(id: id);
+  }
+
+  bool isFavorite({required int id}) {
+    return _placesService.isFavorite(id: id);
+  }
+
+
 }
