@@ -48,6 +48,7 @@ class MapViewModel extends ViewModelAbs<MapViewModel, MapState> {
           long: place.long ?? 0.0,
           title: place.name ?? '',
           imageUrl: place.photo?.url ?? '',
+          monumentIndex: places.results!.indexOf(place),
         ),
       );
     }
@@ -60,11 +61,11 @@ class MapViewModel extends ViewModelAbs<MapViewModel, MapState> {
   }
 
   void setSelectedMarker(MarkerEntity marker) {
-    state = state.copyWith(selectedMarker: marker);
+    state = state.copyWith(selectedMarker: marker, selectedMonument: state.places!.results![marker.monumentIndex]);
   }
 
   void clearSelectedMarker() {
-    state = state.copyWith(selectedMarker: null);
+    state = state.copyWith(selectedMarker: null, selectedMonument: null);
   }
 
 

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:template_flutter_but/domain/entities/marker.entity.dart';
+import 'package:template_flutter_but/domain/entities/monument.entity.dart';
+import 'package:template_flutter_but/ui/screens/Details/details.screen.dart';
 import 'package:template_flutter_but/ui/screens/map/map.state.dart';
 import 'package:template_flutter_but/ui/screens/map/map.viewmodel.dart';
 
 class MapScreen extends ConsumerStatefulWidget {
-  const MapScreen({super.key});
+  const MapScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -84,8 +86,27 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                                 .read(mapProvider.notifier)
                                 .clearSelectedMarker();
                           },
+                          heroTag: 'clearSelectedMarker',
                           backgroundColor: Colors.white,
                           child: const Icon(Icons.clear, color: Colors.black),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0.0,
+                        right: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              MonumentEntity monument = state.selectedMonument!;
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) => DetailsScreen(monument: monument)
+                              ));
+                            },
+                            heroTag: 'goToDetails',
+                            backgroundColor: Colors.white,
+                            child: const Icon(Icons.open_in_browser, color: Colors.black),
+                          ),
                         ),
                       ),
                     ],
