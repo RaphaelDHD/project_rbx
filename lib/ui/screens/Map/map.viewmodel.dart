@@ -24,7 +24,7 @@ class MapViewModel extends ViewModelAbs<MapViewModel, MapState> {
     _init();
   }
 
-  void _init() async {
+  void _init() async { 
     _placesService.placeValueNotifier.addListener(() {
       final List<MarkerEntity> markers = getMarkers(
           _placesService.placeValueNotifier.value ??
@@ -47,14 +47,25 @@ class MapViewModel extends ViewModelAbs<MapViewModel, MapState> {
           lat: place.lat ?? 0.0,
           long: place.long ?? 0.0,
           title: place.name ?? '',
+          imageUrl: place.photo?.url ?? '',
         ),
       );
     }
-    for (MarkerEntity marker in markers) {
-      if (kDebugMode) {
+    if (kDebugMode) {
+      for (MarkerEntity marker in markers) {
         print(marker.title);
       }
     }
     return markers;
   }
+
+  void setSelectedMarker(MarkerEntity marker) {
+    state = state.copyWith(selectedMarker: marker);
+  }
+
+  void clearSelectedMarker() {
+    state = state.copyWith(selectedMarker: null);
+  }
+
+
 }
