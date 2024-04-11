@@ -1,29 +1,60 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
+import 'package:template_flutter_but/domain/entities/marker.entity.dart';
+import 'package:template_flutter_but/domain/entities/monument.entity.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
-import 'package:template_flutter_but/domain/repository/places.repository.dart';
+import 'package:template_flutter_but/domain/services/places.services.dart';
 import 'package:template_flutter_but/ui/abstraction/view_model_abs.dart';
 import 'package:template_flutter_but/ui/screens/map/map.state.dart';
 
-final StateNotifierProvider<MapViewModel, MapState> homeProvider =
+final StateNotifierProvider<MapViewModel, MapState> mapProvider =
     StateNotifierProvider<MapViewModel, MapState>(
   (StateNotifierProviderRef<MapViewModel, MapState> ref) => MapViewModel(
-    placesRepository: injector<PlacesRepository>(),
+    placesService: injector<PlacesService>(),
   ),
 );
 
 class MapViewModel extends ViewModelAbs<MapViewModel, MapState> {
-  final PlacesRepository _placesRepository;
+  final PlacesService _placesService;
 
-  MapViewModel({required PlacesRepository placesRepository})
-      : _placesRepository = placesRepository,
-        super(const MapState.initial()) {
+  MapViewModel({required PlacesService placesService})
+      : _placesService = placesService,
+        super(MapState.initial()) {
     _init();
   }
 
   void _init() async {
-    final PlaceEntity places = await _placesRepository.getPlaces();
-    state = state.copyWith(places: places);
+    _placesService.placeValueNotifier.addListener(() {
+      final List<MarkerEntity> markers = getMarkers(
+          _placesService.placeValueNotifier.value ??
+              const PlaceEntity(totalCount: 0, results: <MonumentEntity>[]));
+      state = state.copyWith(
+          places: _placesService.placeValueNotifier.value, markers: markers);
+    });
+    final List<MarkerEntity> markers = getMarkers(
+        _placesService.placeValueNotifier.value ??
+            const PlaceEntity(totalCount: 0, results: <MonumentEntity>[]));
+    state = state.copyWith(
+        places: _placesService.placeValueNotifier.value, markers: markers);
   }
-  
+
+  List<MarkerEntity> getMarkers(PlaceEntity places) {
+    final List<MarkerEntity> markers = <MarkerEntity>[];
+    for (final MonumentEntity place in places.results!) {
+      markers.add(
+        MarkerEntity(
+          lat: place.lat ?? 0.0,
+          long: place.long ?? 0.0,
+          title: place.name ?? '',
+        ),
+      );
+    }
+    for (MarkerEntity marker in markers) {
+      if (kDebugMode) {
+        print(marker.title);
+      }
+    }
+    return markers;
+  }
 }
