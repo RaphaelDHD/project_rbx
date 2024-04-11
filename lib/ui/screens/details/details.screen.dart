@@ -12,6 +12,8 @@ class DetailsScreen extends ConsumerStatefulWidget {
   _DetailsScreenState createState() => _DetailsScreenState();
 }
 
+enum Settings { addToFavorites, share, report }
+
 class _DetailsScreenState extends ConsumerState<DetailsScreen> {
   late final MonumentEntity monument;
 
@@ -31,6 +33,47 @@ class _DetailsScreenState extends ConsumerState<DetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(monument.name ?? 'Sans nom'),
+        actions: <Widget>[
+          PopupMenuButton(
+            color: Colors.white,
+            onSelected: (Settings result) {
+              switch (result) {
+                case Settings.addToFavorites:
+                  // Add to favorites
+                  break;
+                case Settings.share:
+                  // Share
+                  break;
+                case Settings.report:
+                  // Report
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Settings>>[
+              const PopupMenuItem<Settings>(
+                value: Settings.addToFavorites,
+                child: ListTile(
+                  leading: Icon(Icons.favorite_border),
+                  title: Text('Add to favorites'),
+                ),
+              ),
+              const PopupMenuItem<Settings>(
+                value: Settings.share,
+                child: ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share'),
+                ),
+              ),
+              const PopupMenuItem<Settings>(
+                value: Settings.report,
+                child: ListTile(
+                  leading: Icon(Icons.report),
+                  title: Text('Report'),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -129,7 +172,8 @@ class _DetailsScreenState extends ConsumerState<DetailsScreen> {
                     markers: <Marker>{
                       Marker(
                         markerId: MarkerId(monument.name ?? 'Sans nom'),
-                        position: LatLng(monument.lat ?? 0.0, monument.long ?? 0.0),
+                        position:
+                            LatLng(monument.lat ?? 0.0, monument.long ?? 0.0),
                         infoWindow: InfoWindow(
                           title: monument.name ?? 'Sans nom',
                           snippet: monument.commune ?? 'Unknown',

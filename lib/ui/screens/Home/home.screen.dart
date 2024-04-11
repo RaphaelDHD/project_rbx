@@ -91,19 +91,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Card(
         child: ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0)),
             onTap: () {
-             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => DetailsScreen(monument: monument),
-                ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        DetailsScreen(monument: monument),
+                  ));
             },
             title: Text(monument.name ?? ''),
             subtitle: Text(monument.epoque ?? ''),
             leading: CircleAvatar(
               backgroundColor: color,
               child: Text(firstLetter),
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.favorite_border, color: Colors.purpleAccent,),
+              onPressed: () {},
             )));
   }
 }
