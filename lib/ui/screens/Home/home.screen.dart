@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
-import 'package:template_flutter_but/ui/screens/Home/home.state.dart';
-import 'package:template_flutter_but/ui/screens/Home/home.viewmodel.dart';
+import 'package:template_flutter_but/ui/screens/Details/details.screen.dart';
+import 'package:template_flutter_but/ui/screens/home/home.state.dart';
+import 'package:template_flutter_but/ui/screens/home/home.viewmodel.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -91,7 +92,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Card(
         child: ListTile(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-            onTap: () {},
+            onTap: () {
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => DetailsScreen(monument: monument),
+                ));
+            },
             title: Text(monument.name ?? ''),
             subtitle: Text(monument.epoque ?? ''),
             leading: CircleAvatar(
