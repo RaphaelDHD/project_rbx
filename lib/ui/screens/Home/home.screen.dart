@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
-import 'package:template_flutter_but/ui/screens/Details/details.screen.dart';
 import 'package:template_flutter_but/ui/screens/home/home.state.dart';
 import 'package:template_flutter_but/ui/screens/home/home.viewmodel.dart';
 
@@ -96,12 +95,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    DetailsScreen(monument: monument),
-              ));
+          ref
+              .read(homeProvider.notifier)
+              .goToDetails(id: monument.id, context: context);
         },
         title: Text(monument.name ?? ''),
         subtitle: Text(monument.epoque ?? ''),

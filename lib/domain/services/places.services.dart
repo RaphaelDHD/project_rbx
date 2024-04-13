@@ -15,8 +15,14 @@ class PlacesService {
   final ValueNotifier<FavoriteEntity> favoriteValueNotifier =
       ValueNotifier<FavoriteEntity>(FavoriteEntity(favoriteListId: <int>[]));
 
+  int selectedId = -1;
+
   PlacesService({required PlacesRepository placesRepository})
       : _placesRepository = placesRepository;
+
+  void setId({required int id}) {
+    selectedId = id;
+  }
 
   void getPlaces() async {
     final PlaceEntity places = await _placesRepository.getPlaces();
@@ -54,5 +60,35 @@ class PlacesService {
   bool isFavorite({required int id}) {
     return favoriteValueNotifier.value.favoriteListId.contains(id);
   }
+
+  void addSelectedToFavorite() {
+    final List<int> updatedFavoriteListId =
+        List<int>.from(favoriteValueNotifier.value.favoriteListId)
+          ..add(selectedId);
+    favoriteValueNotifier.value = FavoriteEntity(
+      favoriteListId: updatedFavoriteListId,
+    );
+  }
+
+  void removeSelectedFromFavorite() {
+    final List<int> updatedFavoriteListId =
+        List<int>.from(favoriteValueNotifier.value.favoriteListId)
+          ..remove(selectedId);
+    favoriteValueNotifier.value = FavoriteEntity(
+      favoriteListId: updatedFavoriteListId,
+    );
+  }
+
+  bool isSelectedFavorite() {
+    return favoriteValueNotifier.value.favoriteListId.contains(selectedId);
+  }
+
+  MonumentEntity? getCurrentMonument() {
+    final PlaceEntity? places = placeValueNotifier.value;
+    return places?.results?.firstWhere(
+          (MonumentEntity element) => element.id == selectedId,
+        );
+  }
+
 
 }

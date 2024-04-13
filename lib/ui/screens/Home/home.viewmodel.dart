@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
 import 'package:template_flutter_but/domain/services/places.services.dart';
 import 'package:template_flutter_but/ui/abstraction/view_model_abs.dart';
+import 'package:template_flutter_but/ui/screens/Details/details.screen.dart';
 import 'package:template_flutter_but/ui/screens/home/home.state.dart';
 
 ///
@@ -53,6 +55,16 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
 
   bool isFavorite({required int id}) {
     return _placesService.isFavorite(id: id);
+  }
+
+  void goToDetails({required int id, required BuildContext context}) {
+    _placesService.setId(id: id);
+    Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    const DetailsScreen(),
+              ));
   }
 
 

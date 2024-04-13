@@ -2,79 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
+import 'package:template_flutter_but/ui/screens/details/details.state.dart';
+import 'package:template_flutter_but/ui/screens/details/details.viewmodel.dart';
 
 class DetailsScreen extends ConsumerStatefulWidget {
-  final MonumentEntity monument;
-
-  const DetailsScreen({super.key, required this.monument});
+  const DetailsScreen({super.key});
 
   @override
-  _DetailsScreenState createState() => _DetailsScreenState();
+  ConsumerState<DetailsScreen> createState() => _DetailsScreenState();
 }
 
 enum Settings { addToFavorites, share, report }
 
 class _DetailsScreenState extends ConsumerState<DetailsScreen> {
-  late final MonumentEntity monument;
-
   @override
   void initState() {
     super.initState();
-    monument = widget.monument;
   }
 
   @override
   Widget build(BuildContext context) {
+    final DetailsState state = ref.watch(detailsProvider);
+
+    MonumentEntity? monument = ref.read(detailsProvider.notifier).getMonument();
+
+    bool isFavorite = state.isFavorite;
+
+    if (monument == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            color: Colors.blue,
+          ),
+        ),
+      );
+    }
+
     String adresse = monument.adresseBanSig ?? "Unknown";
     String ville = monument.commune ?? "Unknown";
     String codePostal = monument.codeDepartement.toString();
     String adresseComplete = "$adresse, $ville, $codePostal";
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(monument.name ?? 'Sans nom'),
-        actions: <Widget>[
-          PopupMenuButton(
-            color: Colors.white,
-            onSelected: (Settings result) {
-              switch (result) {
-                case Settings.addToFavorites:
-                  // Add to favorites
-                  break;
-                case Settings.share:
-                  // Share
-                  break;
-                case Settings.report:
-                  // Report
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<Settings>>[
-              const PopupMenuItem<Settings>(
-                value: Settings.addToFavorites,
-                child: ListTile(
-                  leading: Icon(Icons.favorite_border),
-                  title: Text('Add to favorites'),
-                ),
-              ),
-              const PopupMenuItem<Settings>(
-                value: Settings.share,
-                child: ListTile(
-                  leading: Icon(Icons.share),
-                  title: Text('Share'),
-                ),
-              ),
-              const PopupMenuItem<Settings>(
-                value: Settings.report,
-                child: ListTile(
-                  leading: Icon(Icons.report),
-                  title: Text('Report'),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+      appBar:
+          AppBar(title: Text(monument.name ?? 'Sans nom'), actions: <Widget>[
+        IconButton(
+          icon: isFavorite
+              ? const Icon(Icons.favorite)
+              : const Icon(Icons.favorite_border),
+          onPressed: () {
+            if (isFavorite) {
+              ref.read(detailsProvider.notifier).removeFromFavorite();
+            } else {
+              ref.read(detailsProvider.notifier).addToFavorite();
+            }
+          },
+        ),
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
