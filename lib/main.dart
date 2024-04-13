@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
+import 'package:template_flutter_but/data/dao/adapter/monument.model.adapter.dart';
+import 'package:template_flutter_but/data/dao/adapter/photo.model.adapter.dart';
+import 'package:template_flutter_but/data/dao/adapter/place.model.adapter.dart';
+import 'package:template_flutter_but/data/network/models/monument.model.dart';
+import 'package:template_flutter_but/data/network/models/photo.model.dart';
+import 'package:template_flutter_but/data/network/models/place.model.dart';
 import 'package:template_flutter_but/ui/screens/home/home.screen.dart';
 import 'package:template_flutter_but/ui/screens/map/map.screen.dart';
 
 void main() async {
   initializeInjections();
   await Hive.initFlutter();
+  Hive.registerAdapter<PlaceModel>(PlaceModelAdapter());
+  Hive.registerAdapter<MonumentModel>(MonumentModelAdapter());
+  Hive.registerAdapter<PhotoModel>(PhotoModelAdapter());
   runApp(const ProviderScope(child: MyApp()));
 }
 

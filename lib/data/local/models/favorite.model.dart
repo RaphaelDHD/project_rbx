@@ -7,4 +7,8 @@ class FavoriteModel {
 
   FavoriteEntity get toEntity =>
       FavoriteEntity(favoriteListId: favoriteListId ?? <int>[]);
+
+  factory FavoriteModel.fromEntity(FavoriteEntity entity) => FavoriteModel(
+        favoriteListId: entity.favoriteListId,
+      );
 }

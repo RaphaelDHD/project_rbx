@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:template_flutter_but/data/network/models/place.model.dart';
 import 'package:template_flutter_but/domain/entities/favortie.entity.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
 import 'package:template_flutter_but/domain/entities/place.entity.dart';
@@ -29,6 +30,11 @@ class PlacesService {
     placeValueNotifier.value = places;
   }
 
+  void getFavorite() async {
+    final FavoriteEntity favorite = await _placesRepository.getFavorite();
+    favoriteValueNotifier.value = favorite;
+  }
+
   void addPlacesWithOffset({required int offset}) async {
     final PlaceEntity places =
         await _placesRepository.getPlacesWithOffset(offset: offset);
@@ -39,6 +45,8 @@ class PlacesService {
       totalCount: places.totalCount,
       results: updatedResults,
     );
+    PlaceModel model = PlaceModel.fromEntity(placeValueNotifier.value!);
+    _placesRepository.savePlaces(model);
   }
 
   void addToFavorite({required int id}) {
@@ -47,6 +55,7 @@ class PlacesService {
     favoriteValueNotifier.value = FavoriteEntity(
       favoriteListId: updatedFavoriteListId,
     );
+    _placesRepository.addToFavorite(id: id);
   }
 
   void removeFromFavorite({required int id}) {
@@ -55,6 +64,7 @@ class PlacesService {
     favoriteValueNotifier.value = FavoriteEntity(
       favoriteListId: updatedFavoriteListId,
     );
+    _placesRepository.removeFromFavorite(id: id);
   }
 
   bool isFavorite({required int id}) {
@@ -86,9 +96,7 @@ class PlacesService {
   MonumentEntity? getCurrentMonument() {
     final PlaceEntity? places = placeValueNotifier.value;
     return places?.results?.firstWhere(
-          (MonumentEntity element) => element.id == selectedId,
-        );
+      (MonumentEntity element) => element.id == selectedId,
+    );
   }
-
-
 }

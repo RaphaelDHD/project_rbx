@@ -37,6 +37,7 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
     });
     updateLoading(true);
     _placesService.getPlaces();
+    _placesService.getFavorite();
     updateLoading(false);
   }
 
@@ -60,12 +61,9 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
   void goToDetails({required int id, required BuildContext context}) {
     _placesService.setId(id: id);
     Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    const DetailsScreen(),
-              ));
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const DetailsScreen(),
+        ));
   }
-
-
 }

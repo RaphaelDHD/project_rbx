@@ -40,7 +40,14 @@ class PhotoModel {
         height: height,
         url: url,
       );
-
-
-
+  factory PhotoModel.fromEntity(PhotoEntity entity) => PhotoModel(
+        exifOrientation: entity.orientation,
+        thumbnail: entity.thumbnail,
+        filename: entity.filename,
+        format: entity.format,
+        width: entity.width,
+        id: entity.id,
+        height: entity.height,
+        url: entity.url,
+      );
 }
