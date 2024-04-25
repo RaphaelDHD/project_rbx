@@ -83,9 +83,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final MapState state = ref.watch(mapProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cartes'),
-      ),
+      
       body: Stack(
         children: <Widget>[
           GoogleMap(

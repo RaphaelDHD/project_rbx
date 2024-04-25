@@ -115,6 +115,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               return Future.value(null);
                             }
                           },
+                          color: Colors.blue,
                           child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             controller: _scrollController,
@@ -200,7 +201,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               .goToDetails(id: monument.id, context: context);
         },
         title: Text(monument.name ?? ''),
-        subtitle: Text(monument.epoque ?? ''),
+        subtitle: Text(monument.adresseBanSig ?? ''),
         leading: CircleAvatar(
           backgroundColor: color,
           child: Text(firstLetter),
@@ -208,7 +209,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         trailing: IconButton(
           icon: Icon(
             isFavorite ? Icons.favorite : Icons.favorite_border,
-            color: Colors.purpleAccent,
+            color: Colors.blue,
           ),
           onPressed: () {
             if (isFavorite) {
