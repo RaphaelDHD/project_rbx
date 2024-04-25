@@ -117,8 +117,8 @@ class _DetailsScreenState extends ConsumerState<DetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            monument.photo != null && _isConnected
-                ? ClipRRect(
+            monument.photo != null
+                ? _isConnected  ? ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(monument.photo?.url ?? '',
                         width: double.infinity,
@@ -132,7 +132,19 @@ class _DetailsScreenState extends ConsumerState<DetailsScreen> {
                                     child: CircularProgressIndicator(
                                     color: Colors.blue,
                                   ))),
-                  )
+                  ) : ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      color: Colors.grey,
+                      child: const Icon(
+                        Icons.wifi_off,
+                        size: 100,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ) 
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
