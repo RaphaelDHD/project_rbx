@@ -40,6 +40,10 @@ class HomeViewModel extends ViewModelAbs<HomeViewModel, HomeState> {
     updateLoading(false);
   }
 
+  Future<void> getPlaces() async {
+    _placesService.getPlaces();
+  }
+
   void getPlacesWithOffset() async {
     _placesService.addPlacesWithOffset(
         offset: state.places?.results?.length ?? 0);

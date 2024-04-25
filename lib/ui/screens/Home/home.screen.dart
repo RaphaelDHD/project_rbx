@@ -68,6 +68,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _connectionStatus = result;
     });
+    // update isConnected
     if (_connectionStatus.contains(ConnectivityResult.none)) {
       _isConnected = false;
     } else {
@@ -90,7 +91,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final HomeState state = ref.watch(homeProvider);
     final PlaceEntity? places = state.places;
 
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Monuments historiques de Roubaix'),
@@ -104,34 +104,80 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           : Column(
               children: <Widget>[
                 Expanded(
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    controller: _scrollController,
-                    itemCount: (places.results!.length == places.totalCount
-                            ? places.results?.length
-                            : places.results!.length + 1) ??
-                        0, // +1 for loading indicator
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index < places.results!.length) {
-                        final MonumentEntity monument = places.results![index];
-                        return _buildMonumentListItem(context, monument);
-                      } else {
-                        if (_isConnected) {
-                          return const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.blue,
-                                ),
-                              ));
-                        }
-                      }
-                      return null;
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(height: 4.0);
-                    },
-                  ),
+                  child: _isConnected
+                      ? RefreshIndicator(
+                          onRefresh: () {
+                            if (_isConnected) {
+                              return ref
+                                  .read(homeProvider.notifier)
+                                  .getPlaces();
+                            } else {
+                              return Future.value(null);
+                            }
+                          },
+                          child: ListView.separated(
+                            physics: const BouncingScrollPhysics(),
+                            controller: _scrollController,
+                            itemCount:
+                                (places.results!.length == places.totalCount
+                                        ? places.results?.length
+                                        : places.results!.length + 1) ??
+                                    0, // +1 for loading indicator
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index < places.results!.length) {
+                                final MonumentEntity monument =
+                                    places.results![index];
+                                return _buildMonumentListItem(
+                                    context, monument);
+                              } else {
+                                if (_isConnected) {
+                                  return const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.blue,
+                                        ),
+                                      ));
+                                }
+                              }
+                              return null;
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(height: 4.0);
+                            },
+                          ),
+                        )
+                      : ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          controller: _scrollController,
+                          itemCount:
+                              (places.results!.length == places.totalCount
+                                      ? places.results?.length
+                                      : places.results!.length + 1) ??
+                                  0, // +1 for loading indicator
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index < places.results!.length) {
+                              final MonumentEntity monument =
+                                  places.results![index];
+                              return _buildMonumentListItem(context, monument);
+                            } else {
+                              if (_isConnected) {
+                                return const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.blue,
+                                      ),
+                                    ));
+                              }
+                            }
+                            return null;
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(height: 4.0);
+                          },
+                        ),
                 ),
               ],
             ),
