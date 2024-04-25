@@ -6,7 +6,6 @@ import 'package:template_flutter_but/ui/abstraction/view_model_abs.dart';
 import 'package:template_flutter_but/ui/screens/Details/details.screen.dart';
 import 'package:template_flutter_but/ui/screens/home/home.state.dart';
 
-///
 final StateNotifierProvider<HomeViewModel, HomeState> homeProvider =
     StateNotifierProvider<HomeViewModel, HomeState>(
   (StateNotifierProviderRef<HomeViewModel, HomeState> ref) => HomeViewModel(

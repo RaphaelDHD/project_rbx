@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 import 'package:template_flutter_but/data/data_source/places/local/local.data_source.dart';
 import 'package:template_flutter_but/data/data_source/places/remote/remote.data_source.dart';
@@ -28,9 +29,16 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
   @override
   Future<PlaceEntity> getPlaces() async {
+    // check if there is an internet connection
+    // if there is, get data from remote data source
+    // if there is not, get data from local data source
+    final List<ConnectivityResult> connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      final PlaceModel model = await _placesLocalDataSource.getPlaces();
+      return model.toEntity;
+    }
     final PlaceModel model = await _placesRemoteDataSource.getPlaces();
     savePlaces(model);
-    
     return model.toEntity;
   }
 

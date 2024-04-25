@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_flutter_but/application/injections/initializer.dart';
 import 'package:template_flutter_but/domain/entities/monument.entity.dart';
@@ -26,21 +25,18 @@ class DetailsViewModel extends StateNotifier<DetailsState> {
     _placesService.favoriteValueNotifier.addListener(() {
       setIsFavorite();
     });
+    _placesService.selectedIdValueNotifier.addListener(() {
+      setIsFavorite();
+    });
     setIsFavorite();
   }
 
   void addToFavorite() {
     _placesService.addSelectedToFavorite();
-    if (kDebugMode) {
-      print('add to favorite');
-    }
   }
 
   void removeFromFavorite() {
     _placesService.removeSelectedFromFavorite();
-    if (kDebugMode) {
-      print('remove from favorite');
-    }
   }
 
   MonumentEntity? getMonument() {

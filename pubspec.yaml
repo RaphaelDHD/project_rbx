@@ -55,6 +55,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   google_maps_flutter: ^2.2.8
+  connectivity_plus: ^6.0.2
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
